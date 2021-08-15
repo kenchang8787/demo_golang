@@ -13,11 +13,11 @@ https://www.coursera.org/specializations/google-golang
 
 https://golang.org/
 
-# -base
-包含 golang 基本語法使用
+# -tour
+包含 golang 官方教程
 
-# -package
-包含 golang 基本套件使用
+# -advance
+包含 golang 進階使用
 
-# -project
-包含 golang 簡單專案
+# -coursera
+包含 coursera 上 golang 教程的作業
