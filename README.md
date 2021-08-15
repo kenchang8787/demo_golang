@@ -13,11 +13,13 @@ https://www.coursera.org/specializations/google-golang
 
 https://golang.org/
 
+# -coursera
+包含 coursera 上 golang 教程的作業
+
 # -tour
 包含 golang 官方教程
 
 # -advance
 包含 golang 進階使用
 
-# -coursera
-包含 coursera 上 golang 教程的作業
+
