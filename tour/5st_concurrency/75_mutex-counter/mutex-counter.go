@@ -8,10 +8,9 @@ package main
 import (
 	"fmt"
 	"sync"
-	"time"
 )
 
-// SafeCounter 的并发使用是安全的。
+// SafeCounter 的結構內含一個互斥鎖
 type SafeCounter struct {
 	v   map[string]int
 	mux sync.Mutex
@@ -19,8 +18,8 @@ type SafeCounter struct {
 
 // Inc 增加给定 key 的计数器的值。
 func (c *SafeCounter) Inc(key string) {
+	// 互斥鎖 Lock() 後，同時間只有一個 goroutine 可以訪問
 	c.mux.Lock()
-	// Lock 之后同一时刻只有一个 goroutine 能访问 c.v
 	c.v[key]++
 	c.mux.Unlock()
 }
@@ -28,17 +27,16 @@ func (c *SafeCounter) Inc(key string) {
 // Value 返回给定 key 的计数器的当前值。
 func (c *SafeCounter) Value(key string) int {
 	c.mux.Lock()
-	// Lock 之后同一时刻只有一个 goroutine 能访问 c.v
 	defer c.mux.Unlock()
 	return c.v[key]
 }
 
 func main() {
 	c := SafeCounter{v: make(map[string]int)}
+	// 創建 1000 個 goroutine, 新增至同一個 safe counter
 	for i := 0; i < 1000; i++ {
 		go c.Inc("somekey")
 	}
 
-	time.Sleep(time.Second)
 	fmt.Println(c.Value("somekey"))
 }
